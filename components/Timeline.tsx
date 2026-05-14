@@ -19,7 +19,7 @@ const timelineData = [
     icon: <Rocket size={16} />,
   },
   {
-    year: "2025",
+    year: "2026",
     title: "Proyek Profesional",
     subtitle: "PT Yaksa Ersada Solusindo",
     description: "Dipercaya membangun Website Inventaris dan Web Ticketing untuk PT Yaksa Ersada Solusindo. Ini pengalaman pertama kerja proyek nyata di industri, dari analisis kebutuhan sampai deployment.",
@@ -33,7 +33,7 @@ const timelineData = [
     icon: <UtensilsCrossed size={16} />,
   },
   {
-    year: "2025",
+    year: "2026",
     title: "JuaraVibeCoding",
     subtitle: "Google Community Indonesia",
     description: "Ikut serta dalam event JuaraVibeCoding dari Google Community Indonesia. Eksplorasi paradigma baru AI-assisted development dan membuktikan bahwa AI bisa jadi partner yang powerful buat development.",
