@@ -73,7 +73,7 @@ export default function Home() {
         >
           <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] text-[13px] font-medium text-[var(--text-secondary)]">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
-            Peserta JuaraVibeCoding — Google Community Indonesia
+            Unity Project
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight mt-4 leading-[1.1]">
