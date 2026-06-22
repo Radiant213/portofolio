@@ -84,7 +84,7 @@ export default function Home() {
           <p className="text-lg text-[var(--text-secondary)] max-w-2xl leading-relaxed mt-2">
             Full Stack Developer & Next.js/Laravel Enthusiast. Berpengalaman membangun 
             sistem profesional untuk <span className="text-white font-semibold">PT Yaksa Ersada Solusindo</span>, 
-            serta memaksimalkan efisiensi ngoding dengan Vibe Coding AI. Siap menuju level internasional.
+            serta memaksimalkan efisiensi ngoding dengan Vibe Coding AI. Siap untuk membangun projek lainnya.
           </p>
 
           <div className="flex flex-wrap gap-4 pt-4">
