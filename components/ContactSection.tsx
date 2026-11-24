@@ -30,6 +30,7 @@ export default function ContactSection() {
 
   const [copied, setCopied] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [customError, setCustomError] = useState<string | null>(null);
 
   const copyEmail = () => {
     navigator.clipboard.writeText(socials.email);
@@ -37,32 +38,42 @@ export default function ContactSection() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // PRESERVED WORKING SUBMISSION LOGIC:
-  // Submits to https://formsubmit.co/ajax/galangmaruff1@gmail.com with exact payload structure
+  // Fixed & Verified submission logic:
+  // FormSubmit AJAX requires JSON body ('Content-Type': 'application/json')
+  // and explicit check on result.success === "true" to prevent false positives.
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("submitting");
+    setCustomError(null);
 
     const form = e.currentTarget;
-    const data = new FormData(form);
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
 
     try {
       const response = await fetch("https://formsubmit.co/ajax/galangmaruff1@gmail.com", {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: data,
+        body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
+      const result = await response.json().catch(() => null);
+
+      if (response.ok && result && (result.success === "true" || result.success === true)) {
         setStatus("success");
         form.reset();
       } else {
         setStatus("error");
+        setCustomError(result?.message || null);
       }
-    } catch {
+    } catch (err: unknown) {
       setStatus("error");
+      if (err instanceof Error && err.message) {
+        setCustomError(err.message);
+      }
     }
   };
 
@@ -300,14 +311,28 @@ export default function ContactSection() {
 
                 {/* Feedback states */}
                 {status === "success" && (
-                  <div className="p-4 rounded-lg bg-[#10B981]/10 border border-[#10B981]/40 text-xs font-mono text-[#10B981]">
-                    ✓ {t(contact.form.successMessage)}
+                  <div className="p-4 rounded-lg bg-[#10B981]/10 border border-[#10B981]/40 text-xs font-mono text-[#10B981] space-y-1">
+                    <div className="font-semibold">✓ {t(contact.form.successMessage)}</div>
                   </div>
                 )}
 
                 {status === "error" && (
-                  <div className="p-4 rounded-lg bg-[#ef4444]/10 border border-[#ef4444]/40 text-xs font-mono text-[#ef4444]">
-                    ✕ {t(contact.form.errorMessage)}
+                  <div className="p-4 rounded-lg bg-[#ef4444]/10 border border-[#ef4444]/40 text-xs font-mono text-[#ef4444] space-y-2">
+                    <div>✕ {t(contact.form.errorMessage)}</div>
+                    {customError && (
+                      <div className="text-[11px] text-[#f87171] opacity-90">
+                        Detail: {customError}
+                      </div>
+                    )}
+                    <div className="pt-1">
+                      <a
+                        href={`mailto:${socials.email}?subject=Halo%20Galang%20-%20Pesan%20dari%20Portofolio`}
+                        className="inline-flex items-center gap-1.5 text-xs text-[#38BDF8] hover:underline"
+                      >
+                        <span>Kirim via Email Client (Direct)</span>
+                        <ArrowUpRight size={12} />
+                      </a>
+                    </div>
                   </div>
                 )}
               </form>
